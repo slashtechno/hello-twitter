@@ -1,7 +1,7 @@
 import tweepy
 import config
-PYTHONDONTWRITEBYTECODE = 0
-print("Hello, world!")
+# PYTHONDONTWRITEBYTECODE = 0
+print("Hello, world!\n")
 
 CONSUMER_KEY = str(config.CONSUMER_KEY)
 CONSUMER_SECRET = str(config.CONSUMER_SECRET)
@@ -17,3 +17,4 @@ mentions = api.mentions_timeline()
 # go through mentions and scan them for a tag
 for mention in mentions:
     print(mention.text)  # print the mention's text
+    print("ID for the mention above: "+str(mention.id))
