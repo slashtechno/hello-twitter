@@ -15,6 +15,10 @@ For this to work, you need to have a Twitter developer account.
 3. To generate the keys, go to the app you created and go to `Keys and tokens`
 
 #### Program Setup
+##### Install dependencies
+###### May need to use pip3
+`pip install tweepy`
+`pip install config`
 Create a file in the same folder as `hello-twitter.py` named `config.py` and configure it as follows, then run the program
 ```
 CONSUMER_KEY = "Your consumer key"
