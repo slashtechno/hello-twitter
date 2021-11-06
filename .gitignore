@@ -2,3 +2,4 @@ api-keys
 config.py
 __pycache__/ # PYTHONDONTWRITEBYTECODE=0
 __pycache__
+log
