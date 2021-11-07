@@ -47,8 +47,14 @@ while True:
                     print(mention.full_text)  # print the mention's text
                     last_scanned_id = mention.id
                     write_last_id(last_scanned_id, id_file)
-                    api.update_status("@"+mention.user.screen_name
-                                      + " Hi", in_reply_to_status_id=mention.id)
+                    try:
+                        api.update_status("@"+mention.user.screen_name
+                                          + " Hi", in_reply_to_status_id=mention.id)
+                    except tweepy.TweepError as error:
+                        if error.api_code == 187:
+                            pass
+                        else:
+                            raise error
                     print("Replied to @" + mention.user.screen_name)
                     target_content = "True"
                 else:
@@ -65,7 +71,13 @@ while True:
             print(mention.full_text)  # print the mention's text
             last_scanned_id = mention.id
             write_last_id(last_scanned_id, id_file)
-            api.update_status("@"+mention.user.screen_name+" Hi",
-                              in_reply_to_status_id=mention.id)
+            try:
+                api.update_status("@"+mention.user.screen_name+" Hi",
+                                  in_reply_to_status_id=mention.id)
+            except tweepy.TweepError as error:
+                if error.api_code == 187:
+                    pass
+                else:
+                    raise error
             print("Replied to @" + mention.user.screen_name)
-    time.sleep(8)
+    time.sleep(12)  # To avoid rate limiting
