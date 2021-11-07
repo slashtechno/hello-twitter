@@ -68,4 +68,4 @@ while True:
             api.update_status("@"+mention.user.screen_name+" Hi",
                               in_reply_to_status_id=mention.id)
             print("Replied to @" + mention.user.screen_name)
-    time.sleep(1)
+    time.sleep(8)
