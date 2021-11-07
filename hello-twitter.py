@@ -50,11 +50,11 @@ while True:
                     try:
                         api.update_status("@"+mention.user.screen_name
                                           + " Hi", in_reply_to_status_id=mention.id)
-                    except tweepy.TweepError as error:
+                    except tweepy.errors.Forbidden as error:
                         if error.api_code == 187:
                             pass
                         else:
-                            raise error
+                            pass
                     print("Replied to @" + mention.user.screen_name)
                     target_content = "True"
                 else:
@@ -74,10 +74,7 @@ while True:
             try:
                 api.update_status("@"+mention.user.screen_name+" Hi",
                                   in_reply_to_status_id=mention.id)
-            except tweepy.TweepError as error:
-                if error.api_code == 187:
-                    pass
-                else:
-                    raise error
+            except tweepy.errors.Forbidden:
+                pass
             print("Replied to @" + mention.user.screen_name)
     time.sleep(12)  # To avoid rate limiting
