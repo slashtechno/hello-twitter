@@ -30,6 +30,8 @@ ACCESS_SECRET = "Your access secret"
 ### Roadmap  
 - [ ] Instead of storing keys in `config.py` store in JSON
 - [ ] Allow bot to scrape webpages and answer questions
+      For example, getting the amount of pounds of trash removed by #TeamSeas.
+- [ ] Have a help command
 
 #### One more thing
 If you find any bugs, please create a Github issue to report the bug so it can be fixed.
