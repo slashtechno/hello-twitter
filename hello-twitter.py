@@ -77,4 +77,4 @@ while True:
             except tweepy.errors.Forbidden:
                 pass
             print("Replied to @" + mention.user.screen_name)
-    time.sleep(12)  # To avoid rate limiting
+    time.sleep(15)  # To avoid rate limiting
