@@ -25,8 +25,9 @@ CONSUMER_KEY = "Your consumer key"
 CONSUMER_SECRET = "Your consumer secret"
 ACCESS_KEY = "Your access key"
 ACCESS_SECRET = "Your access secret"
-```
-
+```  
+If you want to run this as a service edit the configuration of `hello-twitter.service` to your needs  
+Then copy to `/etc/systemd/system/`
 ### Roadmap  
 - [ ] Instead of storing keys in `config.py` store in JSON
 - [ ] Allow bot to scrape webpages and answer questions  
