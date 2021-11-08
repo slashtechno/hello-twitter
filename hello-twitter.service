@@ -1,0 +1,10 @@
+# How to create systemd services: http://neilwebber.com/notes/2016/02/10/making-a-simple-systemd-file-for-raspberry-pi-jessie/
+[Unit]
+Description= Hello, world!
+
+[Service]
+User=pi
+WorkingDirectory= /home/pi/hello-twitter/
+ExecStart=/bin/python3 /home/pi/hello-twitter/hello-twitter.py
+[Install]
+WantedBy=multi-user.target
