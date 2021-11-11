@@ -1,6 +1,8 @@
 # How to create systemd services: http://neilwebber.com/notes/2016/02/10/making-a-simple-systemd-file-for-raspberry-pi-jessie/
 [Unit]
 Description= Hello, world!
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
 
 [Service]
 User=pi
