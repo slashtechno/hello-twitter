@@ -36,7 +36,7 @@ api = tweepy.API(auth)
 while True:
     # go through new mentions and scan them for a tag
     last_scanned_id = retrieve_id(id_file)
-    mentions = api.mentions_timeline(tweet_mode="extended")
+    mentions = api.mentions_timeline(tweet_mode="extended", count=200)
     if not last_scanned_id:  # Check if there is a stored # ID
         for mention in reversed(mentions):
             # Reply to tweets with specified tag/text
@@ -63,7 +63,7 @@ while True:
     print("last scanned ID was " + str(last_scanned_id))
     # Only scan mentions after last scanned mention
     mentions = api.mentions_timeline(
-        since_id=last_scanned_id, tweet_mode="extended")
+        since_id=last_scanned_id, tweet_mode="extended", count=200)
     for mention in reversed(mentions):
         # Reply to tweets with specified tag/text
         if "#HelloWorld" in mention.full_text:
