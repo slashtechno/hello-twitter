@@ -1,6 +1,8 @@
 import tweepy
 import config
 import time
+import json
+import requests  # pip install requests
 # PYTHONDONTWRITEBYTECODE = 0
 
 CONSUMER_KEY = str(config.CONSUMER_KEY)
@@ -50,11 +52,25 @@ while True:
                     try:
                         api.update_status("@"+mention.user.screen_name
                                           + " Hi", in_reply_to_status_id=mention.id)
-                    except tweepy.errors.Forbidden as error:
-                        if error.api_code == 187:
-                            pass
-                        else:
-                            pass
+                    except tweepy.errors.Forbidden:
+                        pass
+                    print("Replied to @" + mention.user.screen_name)
+                    target_content = "True"
+                else:
+                    target_content = "False"
+                if "#TeamSeas" in mention.full_text:
+                    print("ID for the mention above: "+str(mention.id))
+                    print(mention.full_text)  # print the mention's text
+                    last_scanned_id = mention.id
+                    write_last_id(last_scanned_id, id_file)
+                    try:
+                        stats = json.loads(requests.get(
+                            "https://tscache.com/donation_total.json").text)
+                        print(stats["count"])
+                        api.update_status("@"+mention.user.screen_name + "#TeamSeas has removed " + stats
+                                          + " pounds of trash from the world's oceans!", in_reply_to_status_id=mention.id)
+                    except tweepy.errors.Forbidden:
+                        pass
                     print("Replied to @" + mention.user.screen_name)
                     target_content = "True"
                 else:
@@ -73,6 +89,19 @@ while True:
             write_last_id(last_scanned_id, id_file)
             try:
                 api.update_status("@"+mention.user.screen_name+" Hi",
+                                  in_reply_to_status_id=mention.id)
+            except tweepy.errors.Forbidden:
+                pass
+            print("Replied to @" + mention.user.screen_name)
+        if "#TeamSeas" in mention.full_text:
+            print("ID for the mention above: "+str(mention.id))
+            print(mention.full_text)  # print the mention's text
+            last_scanned_id = mention.id
+            write_last_id(last_scanned_id, id_file)
+            try:
+                stats = json.loads(requests.get("https://tscache.com/donation_total.json").text)
+                print(stats["count"])
+                api.update_status("@"+mention.user.screen_name+"#TeamSeas has removed " + stats + " pounds of trash from the world's oceans!",
                                   in_reply_to_status_id=mention.id)
             except tweepy.errors.Forbidden:
                 pass
