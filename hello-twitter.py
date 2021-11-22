@@ -67,7 +67,7 @@ while True:
                         stats = json.loads(requests.get(
                             "https://tscache.com/donation_total.json").text)
                         print(stats["count"])
-                        api.update_status("@"+mention.user.screen_name + "#TeamSeas has removed " + str(stats["count"])
+                        api.update_status("@"+mention.user.screen_name + "Team Seas has removed " + str(stats["count"])
                                           + " pounds of trash from the world's oceans!", in_reply_to_status_id=mention.id)
                     except tweepy.errors.Forbidden:
                         pass
@@ -102,7 +102,7 @@ while True:
                 stats = json.loads(requests.get(
                     "https://tscache.com/donation_total.json").text)
                 print(stats["count"])
-                api.update_status("@"+mention.user.screen_name+"#TeamSeas has removed " + str(stats["count"]) + " pounds of trash from the world's oceans!",
+                api.update_status("@"+mention.user.screen_name+"Team Seas has removed " + str(stats["count"]) + " pounds of trash from the world's oceans!",
                                   in_reply_to_status_id=mention.id)
             except tweepy.errors.Forbidden:
                 pass
