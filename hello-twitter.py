@@ -38,7 +38,7 @@ while True:
     last_scanned_id = retrieve_id(id_file)
     mentions = api.mentions_timeline(tweet_mode="extended", count=200)
     if not last_scanned_id:  # Check if there is a stored # ID
-        for mention in reversed(mentions):
+        for mention in mentions:
             # Reply to tweets with specified tag/text
             target_content = "False"
             while target_content == "False":
