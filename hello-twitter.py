@@ -67,7 +67,7 @@ while True:
                         stats = json.loads(requests.get(
                             "https://tscache.com/donation_total.json").text)
                         print(stats["count"])
-                        api.update_status("@"+mention.user.screen_name + "#TeamSeas has removed " + stats
+                        api.update_status("@"+mention.user.screen_name + "#TeamSeas has removed " + str(stats["count"])
                                           + " pounds of trash from the world's oceans!", in_reply_to_status_id=mention.id)
                     except tweepy.errors.Forbidden:
                         pass
@@ -99,9 +99,10 @@ while True:
             last_scanned_id = mention.id
             write_last_id(last_scanned_id, id_file)
             try:
-                stats = json.loads(requests.get("https://tscache.com/donation_total.json").text)
+                stats = json.loads(requests.get(
+                    "https://tscache.com/donation_total.json").text)
                 print(stats["count"])
-                api.update_status("@"+mention.user.screen_name+"#TeamSeas has removed " + stats + " pounds of trash from the world's oceans!",
+                api.update_status("@"+mention.user.screen_name+"#TeamSeas has removed " + str(stats["count"]) + " pounds of trash from the world's oceans!",
                                   in_reply_to_status_id=mention.id)
             except tweepy.errors.Forbidden:
                 pass
