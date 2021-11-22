@@ -56,9 +56,8 @@ while True:
                         pass
                     print("Replied to @" + mention.user.screen_name)
                     target_content = "True"
-                else:
-                    target_content = "False"
-                if "#TeamSeas" in mention.full_text:
+
+                elif "\#TeamSeas" in mention.full_text:
                     print("ID for the mention above: "+str(mention.id))
                     print(mention.full_text)  # print the mention's text
                     last_scanned_id = mention.id
