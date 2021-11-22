@@ -31,7 +31,7 @@ Then copy to `/etc/systemd/system/`
 ### Roadmap  
 - [ ] Instead of storing keys in `config.py` store in JSON
 - [ ] Allow bot to scrape webpages and answer questions  
-      For example, getting the amount of pounds of trash removed by #TeamSeas.
+      ~~For example, getting the amount of pounds of trash removed by #TeamSeas.~~ DONE! (not with webscraping, downloading json instead)
 - [ ] Have a help command
 
 #### One more thing
