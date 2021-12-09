@@ -4,7 +4,8 @@ A simple Twitter bot made with Python
 ### What it does
 1. Looks for tweets that mention a user.
 2. Scans through the last 20 mentions for #HelloWorld
-3. If the reply to the tweet contains #HelloWorld, it replies to that tweets
+3. If the mention contains #TeamSeas, it replies to the mention with the pounds of trash removed by [#TeamSeas](https://teamseas.org)
+4. If the mention contains #HelloWorld, it replies to that tweet with `hi`
 
 ### Setup  
 
