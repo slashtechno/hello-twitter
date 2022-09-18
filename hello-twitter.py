@@ -1,14 +1,32 @@
+import os
 import tweepy
-import config
 import time
 import json
-import requests  # pip install requests
+import requests
+from dotenv import load_dotenv
+
+def retrieve_id(file):
+    IDs_read = open(file, "r")
+    last_id = IDs_read.read().strip()
+    # print("Last ID was " + str(last_id))
+    IDs_read.close()
+    return last_id
+
+
+def write_last_id(id, file):
+    IDs_write = open(file, "w")
+    IDs_write.write(str(id))
+    IDs_write.close()
+    return
+
 # PYTHONDONTWRITEBYTECODE = 0
 
-CONSUMER_KEY = str(config.CONSUMER_KEY)
-CONSUMER_SECRET = str(config.CONSUMER_SECRET)
-ACCESS_KEY = str(config.ACCESS_KEY)
-ACCESS_SECRET = str(config.ACCESS_SECRET)
+load_dotenv()
+CONSUMER_KEY = os.getenv("CONSUMER_KEY")
+CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
+ACCESS_KEY = os.getenv("ACCESS_KEY")
+ACCESS_SECRET = os.getenv("ACCESS_SECRET")
+
 
 id_file = "id.txt"
 
