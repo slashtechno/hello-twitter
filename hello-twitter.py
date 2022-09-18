@@ -1,8 +1,10 @@
+from http import client
 import os
 import tweepy
 import time
 import json
 import requests
+from webbrowser import open as open_url
 from dotenv import load_dotenv
 
 def retrieve_id(file):
@@ -22,41 +24,34 @@ def write_last_id(id, file):
 # PYTHONDONTWRITEBYTECODE = 0
 
 load_dotenv()
-CONSUMER_KEY = os.getenv("CONSUMER_KEY")
-CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
-ACCESS_KEY = os.getenv("ACCESS_KEY")
-ACCESS_SECRET = os.getenv("ACCESS_SECRET")
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+REDIRECT_URI = os.getenv("REDIRECT_URI")
 
 
 id_file = "id.txt"
 
-
-def retrieve_id(file):
-    IDs_read = open(file, "r")
-    last_id = IDs_read.read().strip()
-    # print("Last ID was " + str(last_id))
-    IDs_read.close()
-    return last_id
-
-
-def write_last_id(id, file):
-    IDs_write = open(file, "w")
-    IDs_write.write(str(id))
-    IDs_write.close()
-    return
-
-
 # authenticate with Twitter
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+oauth2_user_handler = tweepy.OAuth2UserHandler(
+    client_id=CLIENT_ID,
+    redirect_uri=REDIRECT_URI,
+    scope=["tweet.read", "tweet.write", "users.read", "offline.access"],
+)
+print(oauth2_user_handler.get_authorization_url())
+open_url(oauth2_user_handler.get_authorization_url())
+access_token = oauth2_user_handler.fetch_token(
+    # REDIRECT_URI + "?state=state&code=" + input("Authorization code: ")
+    input("Authorization URL: ")
+)
+print(access_token)
+print("\n")
+client = tweepy.Client(access_token)
 
-# create api object to interact with Twitter
-api = tweepy.API(auth)
 
 while True:
     # go through new mentions and scan them for a tag
     last_scanned_id = retrieve_id(id_file)
-    mentions = api.mentions_timeline(tweet_mode="extended", count=200)
+    mentions = client.mentions_timeline(tweet_mode="extended", count=200)
     if not last_scanned_id:  # Check if there is a stored # ID
         for mention in mentions:
             # Reply to tweets with specified tag/text
@@ -68,7 +63,7 @@ while True:
                     last_scanned_id = mention.id
                     write_last_id(last_scanned_id, id_file)
                     try:
-                        api.update_status("@"+mention.user.screen_name
+                        client.update_status("@"+mention.user.screen_name
                                           + " Hi", in_reply_to_status_id=mention.id)
                     except tweepy.errors.Forbidden:
                         pass
@@ -84,7 +79,7 @@ while True:
                         stats = json.loads(requests.get(
                             "https://tscache.com/donation_total.json").text)
                         print(stats["count"])
-                        api.update_status("@"+mention.user.screen_name + " Team Seas has removed " + str(stats["count"])
+                        client.update_status("@"+mention.user.screen_name + " Team Seas has removed " + str(stats["count"])
                                           + " pounds of trash from the world's oceans!", in_reply_to_status_id=mention.id)
                     except tweepy.errors.Forbidden:
                         pass
@@ -95,7 +90,7 @@ while True:
 
     print("last scanned ID was " + str(last_scanned_id))
     # Only scan mentions after last scanned mention
-    mentions = api.mentions_timeline(
+    mentions = client.mentions_timeline(
         since_id=last_scanned_id, tweet_mode="extended", count=200)
     for mention in reversed(mentions):
         # Reply to tweets with specified tag/text
@@ -105,7 +100,7 @@ while True:
             last_scanned_id = mention.id
             write_last_id(last_scanned_id, id_file)
             try:
-                api.update_status("@"+mention.user.screen_name+" Hi",
+                client.update_status("@"+mention.user.screen_name+" Hi",
                                   in_reply_to_status_id=mention.id)
             except tweepy.errors.Forbidden:
                 pass
@@ -119,7 +114,7 @@ while True:
                 stats = json.loads(requests.get(
                     "https://tscache.com/donation_total.json").text)
                 print(stats["count"])
-                api.update_status("@"+mention.user.screen_name+" Team Seas has removed " + str(stats["count"]) + " pounds of trash from the world's oceans!",
+                client.update_status("@"+mention.user.screen_name+" Team Seas has removed " + str(stats["count"]) + " pounds of trash from the world's oceans!",
                                   in_reply_to_status_id=mention.id)
             except tweepy.errors.Forbidden:
                 pass
